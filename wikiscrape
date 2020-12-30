@@ -1,0 +1,371 @@
+#!/bin/python3
+
+#Wikipedia password dictionary generator
+#Version 1.0 December 2020
+
+import requests
+import os
+from bs4 import BeautifulSoup
+
+if os.name == 'nt':
+	def clear():
+		os.system('cls')
+else:
+	def clear():
+		os.system('clear')		
+
+
+def load_n_scrape(url,exclude):
+    try:
+    	req = requests.get(url)
+    	print('[ ok ]  Response '+ str(req)[11:14])
+    	soup = BeautifulSoup(req.content, 'html.parser').get_text()
+    except:
+    	print('[error]  WARNING couldn\'t load site, check your URL')
+    	return ['']
+    if 'Wikipedia does not have an article' in soup:
+
+        return ['']
+    buff = soup.replace('\n',' ').split(' ')
+
+    text = []
+    for i in buff:
+        if i not in text:
+
+            if i in exclude:
+                pass
+            elif ' ' in i:
+                pass
+            elif '(' in i:
+                pass
+            elif ')' in i:
+                pass
+            elif '"' in i:
+                pass
+            elif '-' in i:
+                pass
+            elif '_' in i:
+            	pass
+            elif ',' in i:
+                pass
+            elif '\'' in i:
+                pass
+            elif '.' in i:
+                pass
+            elif ';' in i:
+                pass
+            elif '\\' in i:
+                pass
+            elif '/' in i:
+                pass
+            elif '[' in i:
+                pass
+            elif ']' in i:
+                pass
+            elif ':' in i:
+                pass
+            elif '%' in i:
+                pass
+            elif '#' in i:
+                pass
+            elif '<' in i:
+                pass
+            elif '>' in i:
+                pass
+            elif '?' in i:
+                pass           
+#following are Wikipedia specific
+#overlaps of multiple languages used to remove
+#the language selector section scraped from the page
+
+            elif 'العربية' in i:
+                pass
+            elif '한국어Հայերենहनद' in i:
+                pass
+            elif 'noעבריתMagyarमरठ'in i:
+                pass
+            elif 'bokmålਪਜਬPolsk' in i:
+                pass
+            elif'EnglishСрпски' in i:
+                pass
+            elif 'srpskiSrpskohrvatski' in i:
+                pass
+            elif 'атскиSuomiSvenska' in i:
+                pass
+            elif 'EnglishSlovenčinaС' in i:
+                pass
+            elif 'Wiki' in i:
+                pass
+            elif 'wiki' in i:
+                pass
+            
+            else:
+                text.append(i) 
+    print('[ ok ]  '+str(len(text))+' unique lines loaded')
+    return text
+
+
+def ones(text):
+	try:
+		a = int(input('minimum password length[8]:'))
+	except:
+		a = 8
+	try:
+		b = int(input('maximum password length[32]:'))
+	except:
+		b = 32
+	oneword = [] 
+	for i in text:
+		if len(i)<=b and len(i)>=a:
+			oneword.append(i)
+	print('[ ok ] '+str(len(oneword))+' possible combinations generated')
+	return oneword
+
+
+def twos(text):
+    try:
+        a = int(input('minimum password length[8]:'))
+    except:
+        a = 8
+    try:
+        b = int(input('maximum password length[32]:'))
+    except:
+        b = 32
+    twoword = [] 
+    for i in text:
+        for j in text:
+            if len(i+j)<=b and len(i+j)>=a:
+                twoword.append(i+j)
+    print('[ ok ] '+str(len(twoword))+' possible combinations generated')
+    return twoword
+
+def threes(text):
+	try:
+		a = int(input('minimum password length[8]:'))
+	except:
+		a = 8
+	try:
+		b = int(input('maximum password length[32]:'))
+	except:
+		b = 32
+	threeword = []
+	for i in text:
+		for j in text:
+			for k in text:
+				if len(i+j+k) <= b and len(i+j+k)>=a:
+					threeword.append(i+j+k)
+	print('[ ok ] '+str(len(threeword))+' possible combinations generated')
+	return threeword
+		
+def fours(text):
+	try:
+		a = int(input('minimum password length[8]:'))
+	except:
+		a = 8
+	try:
+		b = int(input('maximum password length[32]:'))
+	except:
+		b = 32
+	fourword = []
+	for i in text:
+		for j in text:
+			for k in text:
+				for l in text:
+					if len(i+j+k+l) <= b and len(i+j+k+l)>=a:
+						fourword.append(i+j+k+l)
+	print('[ ok ] '+str(len(fourword))+' possible combinations generated, you nut')
+	return fourword
+
+
+def mixdown(generated):
+
+	casing = str(input('force upper/lower case? {upper | lower} [none]: '))
+	if casing == 'upper':
+		caseflag = 1
+	elif casing == 'lower':
+		caseflag = 2
+	else:
+		caseflag = 3
+	filename = str(input('Output Filename [output.txt]'))
+	if filename == '':
+		filename = 'output.txt'
+	try:
+		with open(filename,'a') as f:
+                    if caseflag == 1:
+                        for element in generated:
+                            f.write(element.upper()+'\n')
+                    elif caseflag == 2:
+                        for element in generated:
+                            f.write(element.lower()+'\n')
+                    else:
+                        for element in generated:
+                            f.write(element+'\n') 
+		f.close()
+		print('[ ok ]  '+filename+' successfully written')
+	except:
+		print('[error]  WARNING couldn\'nt write file '+filename)
+
+
+def configure(exclude,URL,space):
+	u = URL
+	s = space
+	
+	Exclude = str(input('Enter a new excluded word file [exclude.conf]: '))
+	if Exclude == '':
+		Exclude = 'exclude.conf'
+		try:
+			with open(Exclude,'r') as f:
+				for line in f:
+					exclude.append(line.strip('\n'))
+			f.close()
+		except:
+			exclude = ['']
+			print('[error] Failed to load excluded words list.')
+	elif Exclude == 'pass':
+		pass
+	else:
+		exclude = []
+		try:
+			with open(Exclude,'r') as f:
+				for line in f:
+					exclude.append(line.strip('\n'))
+			f.close()
+		except:
+			exclude = ['']
+			print('[error] Failed to load excluded words list.')
+				
+				 
+	URL = str(input('Enter a new base URL [https://en.wikipedia.org/wiki/]: '))
+	if URL == '':
+		URL = 'https://en.wikipedia.org/wiki/'
+	elif URL == 'pass':
+		URL = u
+	else:
+		pass
+	space = str(input('Enter a new character to replace spaces in your search [_]: '))
+	if space == 'pass':
+		space = s
+	else:
+		pass
+	return exclude,URL,space
+	
+	
+def load():
+	Exclude = 'exclude.conf'
+	URL = 'https://en.wikipedia.org/wiki/'
+	space = '_'
+	
+	
+	exclude = []
+	try:
+		with open(Exclude,'r') as f:
+			for line in f:
+				exclude.append(line.strip('\n'))
+		f.close()
+	except:
+		exclude = ['']
+		print('[error] Failed to load excluded words list.')
+
+	return exclude,URL,space
+
+
+def scrape(exclude,URL,space):
+	search = str(input('Search: ')).replace(' ',space)
+	url = URL+search
+	wordlist = load_n_scrape(url,exclude)	
+	return wordlist
+
+	
+def scrapeloop(wordlist):
+	if wordlist == ['']:
+	    print('[error]  No Entry Exists')
+	    return 0
+	else:
+            pass    
+
+	print('1 output 1-word combinations (you have another program)')
+	print('2 output 2-word combinations (recommended)')
+	print('3 output 3-word combinations (resource-heavy, use caution)')
+	print('4 output 4-word combinations (if you own a datacenter)')
+	print('00 back')
+	
+	choice = ''
+	while choice != '00':
+		choice = str(input(': '))
+		if choice == '1':
+			mixdown(ones(wordlist))
+			print('\n1 output 1-word combinations (you have another program)')
+			print('2 output 2-word combinations (recommended)')
+			print('3 output 3-word combinations (resource-heavy, use caution)')
+			print('4 output 4-word combinations (if you own a datacenter)')
+			print('00 back')
+		if choice == '2':
+			mixdown(twos(wordlist))
+			print('\n1 output 1-word combinations (you have another program)')
+			print('2 output 2-word combinations (recommended)')
+			print('3 output 3-word combinations (resource-heavy, use caution)')
+			print('4 output 4-word combinations (if you own a datacenter)')
+			print('00 back')
+		if choice == '3':
+			print('\n1 output 1-word combinations (you have another program)')
+			print('2 output 2-word combinations (recommended)')
+			print('3 output 3-word combinations (resource-heavy, use caution)')
+			print('4 output 4-word combinations (if you own a datacenter)')
+			print('00 back')
+		#THREE
+		if choice == '4':
+			print('\n1 output 1-word combinations (you have another program)')
+			print('2 output 2-word combinations (recommended)')
+			print('3 output 3-word combinations (resource-heavy, use caution)')
+			print('4 output 4-word combinations (if you own a datacenter)')
+			print('00 back')
+		#FOUR
+		if choice == 'clear':
+			clear()
+			print('\n1 output 1-word combinations (you have another program)')
+			print('2 output 2-word combinations (recommended)')
+			print('3 output 3-word combinations (resource-heavy, use caution)')
+			print('4 output 4-word combinations (if you own a datacenter)')
+			print('00 back')
+	return 0
+	
+								
+def mainloop(exclude,URL,space):
+	n = ''
+	while n != '00':
+
+		print('0 Configure the generator')
+		print('1 Start scrape')
+		print('00 exit')
+		choice = str(input(': '))
+		if choice == '0':
+			exclude,URL,space = configure(exclude,URL,space)	
+		elif choice == '1':
+			wordlist = scrape(exclude,URL,space)
+			scrapeloop(wordlist)
+			mainloop(exclude,URL,space)
+
+		elif choice == '00':
+			exit()
+		elif choice == 'clear':
+			clear()
+			print('WikiScrape Dictionary Generator\n')
+			mainloop(exclude,URL,space)
+		else:
+			clear()
+			print('WikiScrape Dictionary Generator\n')
+			mainloop(exclude,URL,space)
+	return 0	
+			
+			
+###############################################################	
+	
+	
+if __name__ == '__main__':
+
+	exclude,URL,space = load()
+	clear()
+	print('WikiScrape Dictionary Generator\n')	
+	mainloop(exclude,URL,space)
+	
+	
