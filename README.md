@@ -15,7 +15,7 @@ cd WikiScrape
 sudo ./setup.sh
 
 This automatically installs the dependencies that WikiScrape needs to run.
-If you are installing this on Windows, you can download the wikiscrape.py file and follow the instructions below in Requirements.
+If you are installing this on Windows, you can download the wikiscrape file and follow the instructions below in Requirements. To run it type python3 wikiscrape into a command prompt in the same directory.
 
 
 
