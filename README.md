@@ -1,4 +1,5 @@
 # WikiScrape
+
 Web-Driven Password Dictionary Generator
 Version 0.1
 Philip Gresham  Github:@pgresham
