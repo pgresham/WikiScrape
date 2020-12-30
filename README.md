@@ -21,7 +21,7 @@ Installation:
 
 * cd WikiScrape
 
-* sudo ./setup.sh
+* sudo bash setup.sh
 
 This automatically installs the dependencies that WikiScrape needs to run.
 
