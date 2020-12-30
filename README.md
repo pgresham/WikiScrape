@@ -7,6 +7,15 @@ Introduction:
 
 I wrote this to get experience working with web scraping using BeautifulSoup and to generate a small proof of concept password dictionary showing how informational sites like Wikipedia can create lists of possible passwords based on a single piece of information. For example, say you wanted to crack the password for a wifi network with the SSID Seahawks-5G. The Wikipedia page for the Seattle Sehawks would have a high probablility of containing all the words/numbers that would be in a simple password (player name and jersey number combinations for instance). This program automates the process of mixing down those combinations into text files to feed to another program like Aircrack-ng or HashCat.
 
+Installation:
+In Linux, open a terminal and type the following:
+git clone https://github.com/pgresham/WikiScrape.git 
+cd WikiScrape
+sudo ./setup.sh
+
+This automatically installs the dependencies that WikiScrape needs to run.
+If you are installing this on Windows, you can download the wikiscrape.py file and follow the instructions below in Requirements.
+
 
 
 Requirements:
