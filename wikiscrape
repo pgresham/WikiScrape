@@ -31,62 +31,20 @@ def load_n_scrape(url,exclude):
     text = []
     for i in buff:
         if i not in text:
-
+        #Remove words in Exclude
             if i in exclude:
                 pass
-            elif ' ' in i:
-                pass
-            elif '(' in i:
-                pass
-            elif ')' in i:
-                pass
-            elif '"' in i:
-                pass
-            elif '-' in i:
-                pass
-            elif '_' in i:
-            	pass
-            elif ',' in i:
-                pass
-            elif '\'' in i:
-                pass
-            elif '.' in i:
-                pass
-            elif ';' in i:
-                pass
-            elif '\\' in i:
-                pass
-            elif '/' in i:
-                pass
-            elif '[' in i:
-                pass
-            elif ']' in i:
-                pass
-            elif ':' in i:
-                pass
-            elif '%' in i:
-                pass
-            elif '#' in i:
-                pass
-            elif '<' in i:
-                pass
-            elif '>' in i:
-                pass
-            elif '?' in i:
-                pass           
-#following are Wikipedia specific
-#overlaps of multiple languages used to remove
-#the language selector section scraped from the page
 
+        #Wikipedia-Specific Block
             elif 'العربية' in i:
                 pass
             elif '한국어Հայերենहनद' in i:
                 pass
-            elif 'noעבריתMagyarमरठ'in i:
+            elif 'noעבריתMagyarमरठ' in i:
                 pass
             elif 'bokmålਪਜਬPolsk' in i:
                 pass
-            elif'EnglishСрпски' in i:
+            elif 'EnglishСрпски' in i:
                 pass
             elif 'srpskiSrpskohrvatski' in i:
                 pass
@@ -94,13 +52,14 @@ def load_n_scrape(url,exclude):
                 pass
             elif 'EnglishSlovenčinaС' in i:
                 pass
-            elif 'Wiki' in i:
-                pass
-            elif 'wiki' in i:
-                pass
-            
+
+        #Eliminating symbols in the last pass
+            elif i.isalpha():
+                text.append(i)
+            elif i.isdecimal():
+                text.append(i)
             else:
-                text.append(i) 
+                pass 
     print('[ ok ]  '+str(len(text))+' unique lines loaded')
     return text
 
