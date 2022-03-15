@@ -32,7 +32,7 @@ This was written and tested on a Debian system in Python 3.x.x, but should work 
 
 These can easily be installed with pip3 using the following commands or can be downloaded from the PyPi web repository.
 
-- `python3 -m pip install beautifulsoup4
+- `python3 -m pip install beautifulsoup4`
 - `python3 -m install requests`
 
 It should go without saying, too, you'll need a connection to the Internet for WikiScrape to function properly.
